@@ -11,6 +11,9 @@
 
 using namespace DirectX;
 
+#define SAFE_RELEASE(x) if(x) x->Release()
+#define SAFE_DELETE(x) if(x) delete x
+
 class Game : public DXCore
 {
 public:
@@ -30,13 +33,14 @@ public:
 	void OnMouseMove(WPARAM buttonState, int x, int y);
 	void OnMouseWheel(float wheelDelta, int x, int y);
 
+	void Release();
 private:
 
 	// Initialization helper methods 
 	
 	void CameraInitialize();
 	void ShadersInitialize();
-	void ModelsInitialize();
+	bool ModelsInitialize();
 	void LoadTextures();
 	void MaterialsInitialize();
 	void SkyBoxInitialize();

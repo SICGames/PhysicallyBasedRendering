@@ -12,6 +12,8 @@ Mesh::Mesh(Vertex* vertArray, int numVerts, unsigned int* indexArray, int numInd
 
 Mesh::Mesh(const char* objFile, ID3D11Device* device)
 {
+	bool meshLoaded = false;
+
 	// File input object
 	std::ifstream obj(objFile);
 
@@ -27,8 +29,10 @@ Mesh::Mesh(const char* objFile, ID3D11Device* device)
 		obj.open(debugFolder);
 
 		// If not found, give up
-		if (!obj.is_open())
+		if (!obj.is_open()) {
+			//--- should really check to see if directory of Models exist.
 			return;
+		}
 	}
 
 	// Variables used while reading the file
@@ -186,8 +190,16 @@ Mesh::Mesh(const char* objFile, ID3D11Device* device)
 
 Mesh::~Mesh(void)
 {
-	vb->Release(); vb = 0;
-	ib->Release(); ib = 0;
+	
+	if (vb) {
+		vb->Release();
+		vb = 0;
+	}
+	if (ib) {
+		ib->Release();
+		ib = 0;
+	}
+	
 }
 
 

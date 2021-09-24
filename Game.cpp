@@ -32,54 +32,51 @@ Game::Game(HINSTANCE hInstance)
 #endif
 }
 
+void Game::Release() {
+	
+	SAFE_DELETE(camera);
+	SAFE_DELETE(basePixelShader);
+	SAFE_DELETE(baseVertexShader);
+	SAFE_DELETE(skyVertexShader);
+	SAFE_DELETE(skyPixelShader);
+	SAFE_DELETE(PBRVertexShader);
+	SAFE_DELETE(PBRPixelShader);
+	SAFE_DELETE(PBRMatPixelShader);
+	SAFE_DELETE(ConvolutionPixelShader);
+	SAFE_DELETE(PrefilterMapPixelShader);
+	SAFE_DELETE(IntegrateBRDFPixelShader);
+	SAFE_DELETE(QuadVertexShader);
 
-Game::~Game()
-{
-	delete camera;
+	SAFE_DELETE(sphereMesh);
+	SAFE_DELETE(cubeMesh);
+	SAFE_DELETE(quadMesh);
 
-	delete basePixelShader;
-	delete baseVertexShader;
-	delete skyVertexShader;
-	delete skyPixelShader;
-	delete PBRVertexShader;
-	delete PBRPixelShader;
-	delete PBRMatPixelShader;
-	delete ConvolutionPixelShader;
-	delete PrefilterMapPixelShader;
-	delete IntegrateBRDFPixelShader;
-	delete QuadVertexShader;
+	SAFE_DELETE(materialAluminiumInsulator);
+	SAFE_DELETE(materialGold);
+	SAFE_DELETE(materialGunMetal);
+	SAFE_DELETE(materialLeather);
+	SAFE_DELETE(materialSuperHeroFabric);
+	SAFE_DELETE(materialCamoFabric);
+	SAFE_DELETE(materialGlassVisor);
+	SAFE_DELETE(materialIronOld);
+	SAFE_DELETE(materialRubber);
+	SAFE_DELETE(materialWood);
 
-	delete sphereMesh;
-	delete cubeMesh;
-	delete quadMesh;
-
-	delete materialAluminiumInsulator;
-	delete materialGold;
-	delete materialGunMetal;
-	delete materialLeather;
-	delete materialSuperHeroFabric;
-	delete materialCamoFabric;
-	delete materialGlassVisor;
-	delete materialIronOld;
-	delete materialRubber;
-	delete materialWood;
-
-	delete materialSkyBox;
-
-	delete quadEntity;
-	delete skyBoxEntity;
+	SAFE_DELETE(materialSkyBox);
+	SAFE_DELETE(quadEntity);
+	SAFE_DELETE(skyBoxEntity);
 	/*for(auto& se: sphereEntities) delete se;
 	for (auto& fe : flatEntities) delete fe;*/
-	delete pbrSphere;
-	delete pbrSphere1;
-	delete pbrSphere2;
-	delete pbrSphere3;
-	delete pbrSphere4;
-	delete pbrSphere5;
-	delete pbrSphere6;
-	delete pbrSphere7;
-	delete pbrSphere8;
-	delete pbrSphere9;
+	SAFE_DELETE(pbrSphere);
+	SAFE_DELETE(pbrSphere1);
+	SAFE_DELETE(pbrSphere2);
+	SAFE_DELETE(pbrSphere3);
+	SAFE_DELETE(pbrSphere4);
+	SAFE_DELETE(pbrSphere5);
+	SAFE_DELETE(pbrSphere6);
+	SAFE_DELETE(pbrSphere7);
+	SAFE_DELETE(pbrSphere8);
+	SAFE_DELETE(pbrSphere9);
 
 	for (size_t i = 0; i < 6; i++)
 		for (size_t j = 0; j < 6; j++)
@@ -87,84 +84,82 @@ Game::~Game()
 			delete pbrSpheres[i][j];
 		}
 
-	
-	
-	
-	skyIBLSRV->Release();
-	envMapSRV->Release();
-	envMaptex->Release();
-	skyIBLtex->Release();
-	brdfLUTSRV->Release();
-	brdfLUTtex->Release();
+	SAFE_RELEASE(skyIBLSRV);
+	SAFE_RELEASE(envMapSRV);
+	SAFE_RELEASE(envMaptex);
+	SAFE_RELEASE(skyIBLtex);
+	SAFE_RELEASE(brdfLUTSRV);
+	SAFE_RELEASE(brdfLUTtex);
+	SAFE_RELEASE(rasterizer);
+	SAFE_RELEASE(skyDepthState);
+	SAFE_RELEASE(skyRasterizerState);
+	SAFE_RELEASE(sampler);
 
-	rasterizer->Release();
+	SAFE_RELEASE(AluminiumInsulator_Albedo);
+	SAFE_RELEASE(AluminiumInsulator_Normal);
+	SAFE_RELEASE(AluminiumInsulator_Metallic);
+	SAFE_RELEASE(AluminiumInsulator_Rough);
 
-	skyDepthState->Release();
-	skyRasterizerState->Release();
+	SAFE_RELEASE(Gold_Albedo);
+	SAFE_RELEASE(Gold_Normal);
+	SAFE_RELEASE(Gold_Metallic);
+	SAFE_RELEASE(Gold_Rough);
 
-	sampler->Release();
-	
-	AluminiumInsulator_Albedo->Release();
-	AluminiumInsulator_Normal->Release();
-	AluminiumInsulator_Metallic->Release();
-	AluminiumInsulator_Rough->Release();
+	SAFE_RELEASE(GunMetal_Albedo);
+	SAFE_RELEASE(GunMetal_Normal);
+	SAFE_RELEASE(GunMetal_Metallic);
+	SAFE_RELEASE(GunMetal_Rough);
 
-	Gold_Albedo->Release();
-	Gold_Normal->Release();
-	Gold_Metallic->Release();
-	Gold_Rough->Release();
+	SAFE_RELEASE(Leather_Albedo);
+	SAFE_RELEASE(Leather_Normal);
+	SAFE_RELEASE(Leather_Metallic);
+	SAFE_RELEASE(Leather_Rough);
 
-	GunMetal_Albedo->Release();
-	GunMetal_Normal->Release();
-	GunMetal_Metallic->Release();
-	GunMetal_Rough->Release();
+	SAFE_RELEASE(SuperHeroFabric_Albedo);
+	SAFE_RELEASE(SuperHeroFabric_Normal);
+	SAFE_RELEASE(SuperHeroFabric_Metallic);
+	SAFE_RELEASE(SuperHeroFabric_Rough);
 
-	Leather_Albedo->Release();
-	Leather_Normal->Release();
-	Leather_Metallic->Release();
-	Leather_Rough->Release();
+	SAFE_RELEASE(CamoFabric_Albedo);
+	SAFE_RELEASE(CamoFabric_Normal);
+	SAFE_RELEASE(CamoFabric_Metallic);
+	SAFE_RELEASE(CamoFabric_Rough);
 
-	SuperHeroFabric_Albedo->Release();
-	SuperHeroFabric_Normal->Release();
-	SuperHeroFabric_Metallic->Release();
-	SuperHeroFabric_Rough->Release();
+	SAFE_RELEASE(GlassVisor_Albedo);
+	SAFE_RELEASE(GlassVisor_Normal);
+	SAFE_RELEASE(GlassVisor_Metallic);
+	SAFE_RELEASE(GlassVisor_Rough);
 
-	CamoFabric_Albedo->Release();
-	CamoFabric_Normal->Release(); 
-	CamoFabric_Metallic->Release(); 
-	CamoFabric_Rough->Release();
+	SAFE_RELEASE(IronOld_Albedo);
+	SAFE_RELEASE(IronOld_Normal);
+	SAFE_RELEASE(IronOld_Metallic);
+	SAFE_RELEASE(IronOld_Rough);
 
-	GlassVisor_Albedo->Release();
-	GlassVisor_Normal->Release(); 
-	GlassVisor_Metallic->Release();
-	GlassVisor_Rough->Release();
-	
-	IronOld_Albedo->Release();
-	IronOld_Normal->Release();
-	IronOld_Metallic->Release();
-	IronOld_Rough->Release();
+	SAFE_RELEASE(Rubber_Albedo);
+	SAFE_RELEASE(Rubber_Normal);
+	SAFE_RELEASE(Rubber_Metallic);
+	SAFE_RELEASE(Rubber_Rough);
 
-	Rubber_Albedo->Release();
-	Rubber_Normal->Release();
-	Rubber_Metallic->Release();
-	Rubber_Rough->Release();
+	SAFE_RELEASE(Wood_Albedo);
+	SAFE_RELEASE(Wood_Normal);
+	SAFE_RELEASE(Wood_Metallic);
+	SAFE_RELEASE(Wood_Rough);
 
-	Wood_Albedo->Release();
-	Wood_Normal->Release();
-	Wood_Metallic->Release();
-	Wood_Rough->Release();
+	SAFE_RELEASE(skySRV);
+	SAFE_RELEASE(skyIR);
 
-	skySRV->Release();
-	skyIR->Release();
-
-//#ifdef _DEBUG
-//	ID3D11Debug* DebugDevice = nullptr;
-//	HRESULT Result = device->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&DebugDevice));
-//
-//	Result = DebugDevice->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
-//
-//	DebugDevice->Release();
-//#endif
+	//#ifdef _DEBUG
+	//	ID3D11Debug* DebugDevice = nullptr;
+	//	HRESULT Result = device->QueryInterface(__uuidof(ID3D11Debug), reinterpret_cast<void**>(&DebugDevice));
+	//
+	//	Result = DebugDevice->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+	//
+	//	DebugDevice->Release();
+	//#endif
+}
+Game::~Game()
+{
+	Release();
 }
 
 
@@ -174,7 +169,13 @@ void Game::Init()
 	
 	CameraInitialize();
 	ShadersInitialize();
-	ModelsInitialize();
+	bool result = ModelsInitialize();
+	if (result == false) 
+	{
+		MessageBox(0, "Failed to load models. Make sure Models folder is in the program's directory. Program now exiting.", "Models Load Failure.", 0);
+		//-- should terminate.
+		exit(0);
+	}
 	LoadTextures();
 	SkyBoxInitialize();
 	MaterialsInitialize();
@@ -278,11 +279,22 @@ void Game::ShadersInitialize()
 		QuadVertexShader->LoadShaderFile(L"QuadVertexShader.cso");
 }
 
-void Game::ModelsInitialize()
+bool Game::ModelsInitialize()
 {
 	sphereMesh = new Mesh("Models/sphere.obj", device);
+	if (sphereMesh->GetIndexCount() < 0) 
+	{
+		return false;
+	}
+	
 	cubeMesh = new Mesh("Models/cube.obj", device);
+	
+	if (cubeMesh->GetIndexCount() < 0) return false;
+
 	quadMesh = new Mesh("Models/quad.obj", device);
+	if (quadMesh->GetIndexCount() < 0) return false;
+
+	return true;
 }
 
 void Game::LoadTextures()
